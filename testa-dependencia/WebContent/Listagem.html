@@ -1,0 +1,24 @@
+<html xmlns=”http://www.w3.org/1999/xhtml”
+xmlns:h=”http://java.sun.com/jsf/html”
+xmlns:f=”http://java.sun.com/jsf/core”>
+<head>
+<title>Simple CRUD</title>
+	
+</head>
+<body>
+	<h3>List</h3>
+	<h:form rendered= "#{not empty simpleCrudBean.list}">
+		<h:dataTable valeu="#{simpleCrudBean.list}" var="item">
+			<h:column><f:facet name="header">Titulo</f:facet>#{item.titulo}</h:column>
+			<h:column><f:facet name="header">Autor</f:facet>#{item.autor}</h:column>
+			<h:column><f:facet name="header">Preço</f:facet>#{item.preco}</h:column>
+		</h:dataTable>
+	</h:form>
+	
+	<h:panelGroup rendered="#{empty simpleCrudBean.list}">
+		<p> Sem estudantes! Por favor adicione.</p>
+	</h:panelGroup>	
+		
+					
+</body>
+</html>
