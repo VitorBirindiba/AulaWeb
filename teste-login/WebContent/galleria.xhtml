@@ -7,8 +7,38 @@
 </h:head>
 
 <h:body>
-<p:galleria value="#{imagesView.images}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
-    <p:graphicImage name="/imagens/#{image}" alt="Image Description for #{image}" title="#{image}"/>
-</p:galleria>
+	<h:form>
+		<p:growl id="growl" showDetail="true" life="2000"/> 
+		<p:messages id="messages" autoUpdate="true"/>
+		<div align="center">
+			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+				<h:outputText valeu="escolha a Plataforma:" />
+				<p:selectOneButton value="#{imagesView.option}">
+					<f:selectItem itemLabel="Xbox one" itemValue="Xbox" />
+					<f:selectItem itemLabel="Ps4" itemValue="Ps4" />
+					<f:selectItem itemLabel="Wii" itemValue="Wii" />
+					
+					<!-- teste com e sem <p:ajax -->
+					<p:ajax update="@form" />
+					
+					<!-- testar @form e id ="imagens" -->
+					<p:ajax update="images"/>
+				</p:selectOneButton>
+			
+			</h:panelGrid>
+		</div>
+		
+		<div align="center">
+			<p:commandButton value="Selecionar" update="images, growl" icon="ui-icon-check" />
+			<p:spacer />
+		</div>
+		<div align="center">
+			<p:galleria id="images" value="#{imagesView.images}" var="image" panelWidth="500"
+				panelHeight="313" showCaption="true">
+				<p:graphicImage name="/imagens/#{image}"
+					alt="Image Description for #{image}" title="#{image}" />
+			</p:galleria>
+		</div>
+	</h:form>
 </h:body>
 </html>

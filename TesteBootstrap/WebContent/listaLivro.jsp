@@ -9,7 +9,7 @@
 </head>
 <body>
 	<table>
-		<c:forEach items="${requestScope.listaLivro }" var ="livro">
+		<c:forEach items="${requestScope.livros}" var ="Livro">
 			<tr>
 				<td><c:out value="${livro.titulo}"></c:out></td>
 				<td><c:out value="${livro.autor}"></c:out></td>
