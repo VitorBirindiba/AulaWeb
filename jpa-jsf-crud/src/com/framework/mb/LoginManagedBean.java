@@ -22,7 +22,9 @@ public class LoginManagedBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario não encontrado!", "Erro no login!"));
 			return null;
 		}else {
-			return "/listagemUsuarios";
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("logado", true);
+			return "/restrito/listagemUsuarios.xhtml?faces-redirect=true";
 		}
 	}
 

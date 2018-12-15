@@ -53,5 +53,51 @@ public class UsuarioDAO {
 			return null;
 		}
 	}
+	
+	public boolean inserirUsuario(Usuario usuario) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
+		
+		try {
+			em.persist(usuario);
+			transaction.commit();
+			return true;
+		} catch (Exception e ) {
+			//essa exception nao é necessariamente um erro
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public Usuario consultarUsuario (int id) {
+		try {
+			return em.find(Usuario.class, id);
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public void alterarUsuario(Usuario usuario) {
+		transaction.begin();
+		em.merge(usuario);
+		transaction.commit();
+	}
 
+	public boolean deletarUsario(Usuario usuario) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
+		
+		try {
+			em.merge(usuario);
+			em.remove(usuario);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+	
 }
