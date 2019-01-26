@@ -1,25 +1,32 @@
 package com.framework.mb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.transaction.Transaction;
+import javax.validation.ValidationException;
 
 import com.framework.db.UsuarioDAO;
 import com.framework.model.Usuario;
+import com.framework.service.UsuarioService;
 
 @ViewScoped
 @ManagedBean
 public class UsuarioManagedBean {
 	
+	private final String TELA_NOVO_USUARIO = "/restrito/novoUsuario.xhtml?faces-redirect=true";
+	private final String TELA_LISTAGEM_USUARIO = "/restrito/listagemUsuarios?faces-redirect=true";
+	private final String TELA_EDITAR_USUARIO = "/restrito/editarUsuario?faces-redirect=true&id=" ;
+	
 	private UsuarioDAO usuarioDao = new UsuarioDAO();
 	private Usuario usuario = new Usuario();
-	private List<Usuario> usuarioListDB = new ArrayList<>();
+	
+	@ManagedProperty("#{usuarioService}")
+	private UsuarioService usuarioService;
 	
 	@PostConstruct
 	public void init() {
@@ -31,9 +38,34 @@ public class UsuarioManagedBean {
 	}
 	
 	public String paginaEditar(Usuario usuario) {
-		return "/restrito/editarUsuario?faces-redirect=true&id="+usuario.getId();
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			
+			String id = context.getExternalContext().getSessionMap().get("id").toString();
+			if(id !=null) {
+				Integer idUsuarioLogado = Integer.parseInt(id);
+			//	this.usuario = usuarioDao.consultarUsuario(idUsuarioLogado);
+				this.usuario = usuarioService.consultarUsuario(idUsuarioLogado);
+			}
+			usuarioService.telaEdicao(this.usuario);
+		} catch (ValidationException e ) {
+			e.printStackTrace();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			context.getExternalContext().getFlash().setKeepMessages(true);
+			
+			return TELA_LISTAGEM_USUARIO;
+		}
+		return TELA_EDITAR_USUARIO +usuario.getId();
 	}
 	
+	public UsuarioService getUsuarioService() {
+		return usuarioService;
+	}
+
+	public void setUsuarioService(UsuarioService usuarioService) {
+		this.usuarioService = usuarioService;
+	}
+
 	public List getUsuarioListDb() {
 		return usuarioDao.listarUsuarios();
 	}

@@ -24,7 +24,7 @@ public class Usuario {
 	@Column(name="matricula")
 	private String matricula;
 	
-	@Column(name="passaword", nullable=false, unique=false)
+	@Column(name="password", nullable=false, unique=false)
 	private String senha;
 	
 	@Column(name="lastAccess")

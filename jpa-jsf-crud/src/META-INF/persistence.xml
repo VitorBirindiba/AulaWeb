@@ -5,9 +5,9 @@
 		<class>com.framework.model.Usuario</class>
 	 <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/3way" /> <!-- BD Mane -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/user" /> <!-- BD Mane -->
             <property name="javax.persistence.jdbc.user" value="postgres" /> <!-- DB User -->
-            <property name="javax.persistence.jdbc.password" value="123456" /> <!-- DB Password -->
+            <property name="javax.persistence.jdbc.password" value="postgres" /> <!-- DB Password -->
 
 	    <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> <!-- DB Dialect -->
             <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- create / create-drop / update -->
